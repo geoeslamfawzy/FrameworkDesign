@@ -1,36 +1,26 @@
 package utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import constants.FrameworkConstants;
-import enums.ConfigProperties;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 
-public final class PropertyUtils {
-    private PropertyUtils(){}
-
-    private static Properties properties = new Properties(); //This to work with the property file
+public class JsonUtils {
     //This to make a hashmap that is used to point to the value of a key
     private static Map<String, String> CONFIGMAP = new HashMap<>();
 
-    /**
-     * This Static block helps you to make your map to point to the value in the property file
-     * Converting a property to a hashmap needs some time
-     *
-     * The Advantage of Using HashMap instead of the simple reading from the file
-     *      1- Hash Table is little slow but thread safe
-     *      2- If we have multiple value for a key (parallel execution) -> Multiple browsers
-     *      3- Different URLs for different Tests
-     */
+    private JsonUtils(){}
     static {
         try {
             //1- Stream on the Property File
-            FileInputStream file = new FileInputStream(FrameworkConstants.getConfigFilePath());
+            FileInputStream file = new FileInputStream(FrameworkConstants.getResourcesPath("userData.json"));
+            CONFIGMAP = new ObjectMapper().readValue(new File(""), HashMap.class);
             Properties properties = new Properties(); //This class to work on the file
             properties.load(file);
 
@@ -43,7 +33,7 @@ public final class PropertyUtils {
              *              1- Put the key in the Configuration file as a key in this map
              *              2- put its corresponding values as a value in this map
              */
-            for(Map.Entry<Object, Object> entry : properties.entrySet()){
+            for (Map.Entry<Object, Object> entry : properties.entrySet()) {
                 //Put everything; key and value, in a hashmap
                 CONFIGMAP.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()).trim());
             }
@@ -51,19 +41,13 @@ public final class PropertyUtils {
                     put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())));
 
              */
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
 
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static String getValue(ConfigProperties key) throws Exception{
-        if (Objects.isNull(key) || Objects.isNull(CONFIGMAP.get(key.name().toLowerCase()))){
-            //If there's no value for a specific key, then throw an exception
-            throw new Exception("Property Name " + key + " is not found, please check config.properties");
-        }
-        return CONFIGMAP.get(key.name().toLowerCase());
-    }
+
 }

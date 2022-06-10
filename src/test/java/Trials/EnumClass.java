@@ -9,4 +9,5 @@ public class EnumClass {
     public static final SeverityClass  low = new SeverityClass();*/
 
 
+
 }

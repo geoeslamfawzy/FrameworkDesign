@@ -1,11 +1,9 @@
 package driver;
 
-import constants.FrameworkConstants;
 import enums.ConfigProperties;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
-import utils.PropertyUtils;
-import utils.SimplePropertyFileReader;
+import helpers.PropertyUtils;
 
 import java.util.Objects;
 

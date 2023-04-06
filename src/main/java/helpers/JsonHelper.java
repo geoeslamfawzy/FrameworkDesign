@@ -1,4 +1,4 @@
-package utils;
+package helpers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import constants.FrameworkConstants;
@@ -11,15 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class JsonUtils {
+public class JsonHelper {
     //This to make a hashmap that is used to point to the value of a key
     private static Map<String, String> CONFIGMAP = new HashMap<>();
 
-    private JsonUtils(){}
+    private JsonHelper(){}
     static {
         try {
-            //1- Stream on the Property File
-            FileInputStream file = new FileInputStream(FrameworkConstants.getResourcesPath("userData.json"));
+            FileInputStream file = new FileInputStream(FrameworkConstants.getResourcesPath("loginData.json"));
             CONFIGMAP = new ObjectMapper().readValue(new File(""), HashMap.class);
             Properties properties = new Properties(); //This class to work on the file
             properties.load(file);

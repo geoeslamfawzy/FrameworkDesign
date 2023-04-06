@@ -1,4 +1,4 @@
-package utils;
+package helpers;
 
 import constants.FrameworkConstants;
 import enums.ConfigProperties;
@@ -28,10 +28,9 @@ public final class PropertyUtils {
         }
     }
     public static String get(ConfigProperties key) throws Exception{
-        //If the value of a key is not present property.getProperty(key) or the key is null
         if(Objects.isNull(key) || Objects.isNull(CONFIGMAP.get(key.name().toLowerCase()))){
             throw new Exception(key + " Property is Not found in your file, Please Check config.properties");
         }
-        return CONFIGMAP.get(key.name().toLowerCase()); //else return the value
+        return CONFIGMAP.get(key.name().toLowerCase());
     }
 }

@@ -16,7 +16,7 @@ public final class FrameworkConstants {
     public static int getExplicitwait(){
         return EXPLICITWAIT;
     }
-    public static String getResourcesPath(String fileName){
+    public static String readDataFile(String fileName){
         return RESOURCESPATH + fileName;
     }
 

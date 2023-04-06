@@ -1,6 +1,16 @@
-[
   {
-    "username" : "Admin",
-    "password" : "admin123"
+    "userLogins": [
+      {
+        "username": "Admin",
+        "password": "admin123"
+      },
+      {
+        "username": "xyz@gmail.com",
+        "password": "Test@12"
+      },
+      {
+        "username": "adtest@yourstore.com",
+        "password": "adn"
+      }
+    ]
   }
-]

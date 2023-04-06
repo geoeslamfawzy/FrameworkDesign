@@ -13,7 +13,7 @@ import java.io.IOException;
 public class ExcelHelper {
     static FileInputStream fis = null;
     public FileInputStream getFileInputStream(){
-        File srcFile = new File(FrameworkConstants.getResourcesPath("PackagesData.xlsx"));
+        File srcFile = new File(FrameworkConstants.readDataFile("PackagesData.xlsx"));
         try{
             fis = new FileInputStream(srcFile);
         }catch (FileNotFoundException e) {

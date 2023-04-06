@@ -1,22 +1,23 @@
 package pages;
 
+import base.UIActions;
 import driver.DriverManager;
+import enums.WaitStrategy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class OrangeHRMHomePage {
-    private final By welcomeLink = By.id("welcome");
+    UIActions ui = new UIActions();
+    private final By welcomeLink = By.xpath("//p[contains(@class, 'oxd-userdropdown-name')]");
     private final By logoutLink = By.xpath("//a[text()='Logout']");
 
-    public OrangeHRMHomePage clickOnWelcome(){
-        DriverManager.getDriver().findElement(welcomeLink).click();
+    public OrangeHRMHomePage clickOnWelcome() {
+        ui.clickOn(welcomeLink, WaitStrategy.ClICKABLE);
         return this;
     }
     public OrangeHRMLoginPage logout(){
-        new WebDriverWait(DriverManager.getDriver(), 10)
-                .until(ExpectedConditions.elementToBeClickable(logoutLink));
-        DriverManager.getDriver().findElement(logoutLink).click();
+        ui.clickOn(logoutLink, WaitStrategy.ClICKABLE);
         return new OrangeHRMLoginPage();
     }
 }

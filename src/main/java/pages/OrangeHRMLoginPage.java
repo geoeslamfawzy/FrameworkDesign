@@ -1,13 +1,14 @@
 package pages;
 
+import base.UIActions;
 import driver.DriverManager;
 import enums.WaitStrategy;
 import org.openqa.selenium.By;
 
-public class OrangeHRMLoginPage extends BasePage{
-    private final By usernameField = By.id("txtUsername");
-    private final By passwordField = By.xpath("//input[@id='txtPassword' and @type='password']");
-    private final By loginBtn = By.xpath("//input[@name='Submit']");
+public class OrangeHRMLoginPage extends UIActions {
+    private final By usernameField = By.name("username");
+    private final By passwordField = By.name("password");
+    private final By loginBtn = By.xpath("//button[contains(@type, 'submit')]");
 
     public OrangeHRMLoginPage writeUserName(String username){
         writeIn(username, usernameField, WaitStrategy.VISIBLE);

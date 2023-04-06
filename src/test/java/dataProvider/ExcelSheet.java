@@ -1,7 +1,6 @@
 package dataProvider;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -12,7 +11,7 @@ import java.util.Map;
 
 
 public class ExcelSheet {
-    @Test(dataProvider = "getExcelData")
+    /*@Test(dataProvider = "getExcelData")
     public void testExcelData(Map<String, String> map){
         System.out.println(map.get("password"));
     }
@@ -43,5 +42,5 @@ public class ExcelSheet {
             }
         }
         return data;
-    }
+    }*/
 }

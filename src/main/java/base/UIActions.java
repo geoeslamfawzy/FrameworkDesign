@@ -1,4 +1,4 @@
-package pages;
+package base;
 
 import driver.DriverManager;
 import enums.WaitStrategy;
@@ -7,8 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 
-public class BasePage {
-    protected void clickOn(By locator, WaitStrategy waitStrategy){
+public class UIActions {
+    public void clickOn(By locator, WaitStrategy waitStrategy){
         WebElement element =  ExplicitWaitFactory.performExplicitWait(waitStrategy, locator);
         element.click();
     }

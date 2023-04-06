@@ -14,56 +14,24 @@ import java.util.Properties;
 public final class PropertyUtils {
     private PropertyUtils(){}
 
-    private static Properties properties = new Properties(); //This to work with the property file
-    //This to make a hashmap that is used to point to the value of a key
-    private static Map<String, String> CONFIGMAP = new HashMap<>();
-
-    /**
-     * This Static block helps you to make your map to point to the value in the property file
-     * Converting a property to a hashmap needs some time
-     *
-     * The Advantage of Using HashMap instead of the simple reading from the file
-     *      1- Hash Table is little slow but thread safe
-     *      2- If we have multiple value for a key (parallel execution) -> Multiple browsers
-     *      3- Different URLs for different Tests
-     */
+    private static Properties property = new Properties();
+    private static final Map<String, String> CONFIGMAP = new HashMap<>();
     static {
         try {
-            //1- Stream on the Property File
             FileInputStream file = new FileInputStream(FrameworkConstants.getConfigFilePath());
-            Properties properties = new Properties(); //This class to work on the file
-            properties.load(file);
-
-            /**
-             * properties is an object, while the key and value in the configuration files are string
-             *      Thus, we iterate on each object on the properties of the configuration file to get its keyset
-             *          loop on the properties you have and put
-             *          Make a hashmap to store all keys&Values in the configuration file
-             *          for each keyset in the properties you have
-             *              1- Put the key in the Configuration file as a key in this map
-             *              2- put its corresponding values as a value in this map
-             */
-            for(Map.Entry<Object, Object> entry : properties.entrySet()){
-                //Put everything; key and value, in a hashmap
-                CONFIGMAP.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()).trim());
-            }
-            /*properties.entrySet().forEach(entry -> CONFIGMAP.
-                    put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())));
-
-             */
+            property.load(file);
+            property.entrySet().forEach(entry -> CONFIGMAP.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue())));
         } catch (FileNotFoundException e){
             e.printStackTrace();
-
-        } catch (IOException e){
+        }catch (IOException e){
             e.printStackTrace();
         }
     }
-
-    public static String getValue(ConfigProperties key) throws Exception{
-        if (Objects.isNull(key) || Objects.isNull(CONFIGMAP.get(key.name().toLowerCase()))){
-            //If there's no value for a specific key, then throw an exception
-            throw new Exception("Property Name " + key + " is not found, please check config.properties");
+    public static String get(ConfigProperties key) throws Exception{
+        //If the value of a key is not present property.getProperty(key) or the key is null
+        if(Objects.isNull(key) || Objects.isNull(CONFIGMAP.get(key.name().toLowerCase()))){
+            throw new Exception(key + " Property is Not found in your file, Please Check config.properties");
         }
-        return CONFIGMAP.get(key.name().toLowerCase());
+        return CONFIGMAP.get(key.name().toLowerCase()); //else return the value
     }
 }

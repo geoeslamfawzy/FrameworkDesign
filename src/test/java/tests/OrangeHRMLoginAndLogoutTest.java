@@ -1,5 +1,6 @@
 package tests;
 
+import dataProvider.DataProviderTest;
 import helpers.JsonHelper;
 import org.assertj.core.api.Assertions;
 import org.json.simple.parser.ParseException;
@@ -12,7 +13,7 @@ import java.io.IOException;
 public final class OrangeHRMLoginAndLogoutTest extends BaseTest{
     private OrangeHRMLoginAndLogoutTest(){}
 
-    @Test(dataProvider = "test data")
+    @Test(dataProviderClass = DataProviderTest.class, dataProvider = "loginData_happyScenario")
     public void testLoginAndLogout(String username, String password){
         String title = new OrangeHRMLoginPage()
                 .writeUserName(username).writePassword(password).clickOnLogin()
@@ -23,18 +24,18 @@ public final class OrangeHRMLoginAndLogoutTest extends BaseTest{
                 .isEqualTo("OrangeHRM");
     }
 
-    @DataProvider(name = "test data")
-    public Object[][] getLoginData() {
-        return new Object[][]{
-                {"Admin", "admin123"}
-        };
-    }
-
-    //@DataProvider(name = "test data")
-    public Object[][] getLoginDataFromJson() throws IOException, ParseException {
-       return JsonHelper.getJsonData("loginData.json",
-               "userLogins", 2);
-    }
+//    @DataProvider(name = "test data")
+//    public Object[][] getLoginData() {
+//        return new Object[][]{
+//                {"Admin", "admin123"}
+//        };
+//    }
+//
+//    //@DataProvider(name = "test data")
+//    public Object[][] getLoginDataFromJson() throws IOException, ParseException {
+//       return JsonHelper.getJsonData("loginData.json",
+//               "userLogins", 2);
+//    }
 }
 
 

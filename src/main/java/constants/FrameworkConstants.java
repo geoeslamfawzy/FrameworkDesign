@@ -1,14 +1,17 @@
 package constants;
 
 public final class FrameworkConstants {
-    private static final String CHROMEDRIVERPATH = System.getProperty("user.dir")+ "\\drivers\\chromedriver.exe";
-    private static final String CONFIGFILEPATH = System.getProperty("user.dir")+"\\src\\test\\java\\config\\config.properties";
+    private static final String CHROMEDRIVERPATH = getProjectDirectory() + "drivers\\chromedriver.exe";
+    private static final String CONFIGFILEPATH = getProjectDirectory() + "src\\test\\java\\config\\config.properties";
     private static final int EXPLICITWAIT = 10;
-    public static final String RESOURCESPATH = System.getProperty("user.dir") + "\\src\\test\\java\\data\\";
+    private static final String RESOURCESPATH = getProjectDirectory() +"src\\test\\java\\data\\";
 
 
     public static String getChromePath(){
         return CHROMEDRIVERPATH;
+    }
+    public static String getProjectDirectory(){
+        return System.getProperty("user.dir") + "\\";
     }
     public static String getConfigFilePath(){
         return CONFIGFILEPATH;
@@ -19,6 +22,7 @@ public final class FrameworkConstants {
     public static String readDataFile(String fileName){
         return RESOURCESPATH + fileName;
     }
+
 
 
 

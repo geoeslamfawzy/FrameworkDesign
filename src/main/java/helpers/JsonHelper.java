@@ -1,26 +1,47 @@
 package helpers;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import constants.FrameworkConstants;
-import org.json.JSONObject;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.apache.commons.io.FileUtils;
 
-import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class JsonHelper {
-    public static Object[][] getJsonData(String filename, String JSON_Data, int JSON_attributes) throws IOException, ParseException {
-        Object object = new JSONParser().parse(new FileReader(FrameworkConstants.readDataFile(filename)));
-        JSONObject jo = (JSONObject) object;
-        JSONArray js = (JSONArray) jo.get(JSON_Data);
+    private final String fileName;
 
-        Object[][] arr = new String[js.size()][JSON_attributes];
-        for (int i = 0; i < js.size(); i++){
-            JSONObject obj1 = (JSONObject) js.get(i);
-            arr[i][0] = String.valueOf(obj1.get("username"));
-            arr[i][1] = String.valueOf(obj1.get("password"));
+    public JsonHelper(String fileName) {
+        this.fileName = FrameworkConstants.readDataFile(fileName + ".json") ;
+    }
+
+    public String extractData(String tokenName) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(new File(fileName));
+        JsonNode tokenNode = rootNode.get(tokenName);
+        return tokenNode.asText();
+    }
+
+
+    public List<HashMap<String, String>> getJsonDataToMap(String tokenPath) throws IOException {
+        String jsonContent = FileUtils.readFileToString(new File(fileName), StandardCharsets.UTF_8);
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(jsonContent);
+        JsonNode userLoginsNode = rootNode.path(tokenPath);
+        List<HashMap<String, String>> data = mapper.readValue(userLoginsNode.toString(), new TypeReference<List<HashMap<String, String>>>() {});
+        return data;
+    }
+    public Object[][] getJsonArrayData(String tokenArray) throws IOException {
+        List<HashMap<String, String>> data = getJsonDataToMap(tokenArray);
+        Object[][] testData = new Object[data.size()][1];
+        for (int i = 0; i < data.size(); i++) {
+            testData[i][0] = data.get(i);
         }
-        return arr;
+        return testData;
     }
 }

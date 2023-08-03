@@ -20,6 +20,7 @@ public final class FrameworkConstants {
         return EXPLICITWAIT;
     }
     public static String readDataFile(String fileName){
+        System.out.println(RESOURCESPATH + fileName);
         return RESOURCESPATH + fileName;
     }
 

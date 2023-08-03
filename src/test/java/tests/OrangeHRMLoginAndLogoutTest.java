@@ -1,20 +1,17 @@
 package tests;
 
-import dataProvider.DataProviderTest;
-import helpers.JsonHelper;
+import dataProvider.ExcelSheet;
+import dataProvider.Json;
 import org.assertj.core.api.Assertions;
-import org.json.simple.parser.ParseException;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.OrangeHRMLoginPage;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public final class OrangeHRMLoginAndLogoutTest extends BaseTest{
     private OrangeHRMLoginAndLogoutTest(){}
 
-    @Test(dataProviderClass = DataProviderTest.class, dataProvider = "jsonDataaaa")
+    @Test(dataProviderClass = ExcelSheet.class, dataProvider = "loginData_happyScenario")
     public void testLoginAndLogout(String username, String password){
         String title = new OrangeHRMLoginPage()
                 .writeUserName(username).writePassword(password).clickOnLogin()
@@ -25,7 +22,7 @@ public final class OrangeHRMLoginAndLogoutTest extends BaseTest{
                 .isEqualTo("OrangeHRM");
     }
 
-    @Test(dataProviderClass = DataProviderTest.class, dataProvider = "loginDataFromJson")
+    @Test(dataProviderClass = Json.class, dataProvider = "loginDataFromJson")
     public void testLoginAndLogoutFromJson(HashMap<String, String> credentials) {
         String title = new OrangeHRMLoginPage()
                 .writeUserName(credentials.get("username"))

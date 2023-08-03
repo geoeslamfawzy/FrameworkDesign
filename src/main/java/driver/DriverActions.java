@@ -1,28 +1,29 @@
 package driver;
 
+import enums.BrowserType;
 import enums.ConfigProperties;
+import factories.BrowserFactory;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.logging.log4j.util.Constants;
 import org.openqa.selenium.chrome.ChromeDriver;
 import helpers.PropertyUtils;
 
 import java.util.Objects;
 
-public final class DriverActions {
-
-    public static void initDriver() throws Exception {
-        if (Objects.isNull(DriverManager.getDriver())){
-            System.out.println(Thread.currentThread().getName());
-            WebDriverManager.chromedriver().setup();
-            DriverManager.setDriver(new ChromeDriver());
-            DriverManager.getDriver().get(PropertyUtils.get(ConfigProperties.URL));
-            DriverManager.getDriver().manage().window().maximize();
-        }
-    }
-
+public final class DriverActions extends BrowserFactory {
     public static void quitDriver() {
-        if(Objects.nonNull(DriverManager.getDriver())){
+        if (Objects.nonNull(DriverManager.getDriver())) {
             DriverManager.getDriver().quit();
             DriverManager.unload(); //clean after quit the driver
         }
     }
+    public static void initDriver() throws Exception {
+        if (DriverManager.getDriver() == null) {
+            initBrowser(BrowserType.CHROME);
+            DriverManager.getDriver().manage().window().maximize();
+            DriverManager.getDriver().get(PropertyUtils.get(ConfigProperties.URL));
+        }
+    }
 }
+
+

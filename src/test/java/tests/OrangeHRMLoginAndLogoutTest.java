@@ -14,19 +14,19 @@ import java.util.HashMap;
 public final class OrangeHRMLoginAndLogoutTest extends BaseTest{
     private OrangeHRMLoginAndLogoutTest(){}
 
-//    @Test(dataProviderClass = DataProviderTest.class, dataProvider = "jsonDataaaa")
-//    public void testLoginAndLogout(String username, String password){
-//        String title = new OrangeHRMLoginPage()
-//                .writeUserName(username).writePassword(password).clickOnLogin()
-//                .clickOnWelcome().logout()
-//                .getPageTitle();
-//        Assertions.assertThat(title)
-//                .as("Title is null").isNotNull()
-//                .isEqualTo("OrangeHRM");
-//    }
+    @Test(dataProviderClass = DataProviderTest.class, dataProvider = "jsonDataaaa")
+    public void testLoginAndLogout(String username, String password){
+        String title = new OrangeHRMLoginPage()
+                .writeUserName(username).writePassword(password).clickOnLogin()
+                .clickOnWelcome().logout()
+                .getPageTitle();
+        Assertions.assertThat(title)
+                .as("Title is null").isNotNull()
+                .isEqualTo("OrangeHRM");
+    }
 
     @Test(dataProviderClass = DataProviderTest.class, dataProvider = "loginDataFromJson")
-    public void testLoginAndLogout(HashMap<String, String> credentials) {
+    public void testLoginAndLogoutFromJson(HashMap<String, String> credentials) {
         String title = new OrangeHRMLoginPage()
                 .writeUserName(credentials.get("username"))
                 .writePassword(credentials.get("password"))
@@ -44,16 +44,9 @@ public final class OrangeHRMLoginAndLogoutTest extends BaseTest{
 //    @DataProvider(name = "test data")
 //    public Object[][] getLoginData() {
 //        return new Object[][]{
-//                {"Admin", "admin123"}
+//                {"Admin", "admin123"}git
 //        };
 //    }
-//
-//    //@DataProvider(name = "test data")
-//    public Object[][] getLoginDataFromJson() throws IOException, ParseException {
-//       return JsonHelper.getJsonData("loginData.json",
-//               "userLogins", 2);
-//    }
-
 
 }
 
